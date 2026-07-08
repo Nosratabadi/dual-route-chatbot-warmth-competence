@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Study</title>
+    <!-- Import Markdown Parser for Tables/Formatting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* --- EXACT SAME STYLING AS BEFORE --- */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #333; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .btn { background-color: #0056b3; color: white; border: none; padding: 12px 25px; font-size: 16px; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 20px; }
+        .btn:hover { background-color: #004494; }
+        .form-group { margin-bottom: 25px; background: #fdfdfd; padding: 15px; border-radius: 5px; border: 1px solid #eee; }
+        label { display: block; margin-bottom: 10px; font-weight: bold; }
+        .likert-scale { display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 10px; }
+        .likert-option { text-align: center; flex: 1; font-size: 0.9em; }
+        .likert-option input { margin-bottom: 5px; cursor: pointer; }
+        
+        /* Chat Interface */
+        #chat-interface { display: none; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 650px; display: flex; flex-direction: column; background: #fff; }
+        #chat-window { flex: 1; padding: 20px; overflow-y: auto; background-color: #f8f9fa; }
+        
+        /* Message Bubbles */
+        .message { margin-bottom: 15px; max-width: 85%; padding: 12px 18px; border-radius: 12px; line-height: 1.5; font-size: 15px; }
+        .bot-message { background-color: #e9ecef; color: #333; align-self: flex-start; margin-right: auto; border-bottom-left-radius: 2px; }
+        .user-message { background-color: #0056b3; color: white; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 2px; }
+        
+        /* Table & Image Styling inside Chat */
+        .bot-message table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; font-size: 0.9em; }
+        .bot-message th, .bot-message td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .bot-message th { background-color: #f2f2f2; font-weight: bold; }
+        
+        /* Product Image Styling */
+        .product-img { 
+            width: 150px; 
+            height: auto; 
+            display: block; 
+            margin: 10px auto; 
+            border-radius: 8px; 
+            border: 1px solid #ccc; 
+            padding: 5px; 
+            background: white;
+        }
+
+        #input-area { display: flex; padding: 15px; background: #fff; border-top: 1px solid #ddd; }
+        #user-input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; font-size: 15px; }
+        .stage { display: none; }
+        .active-stage { display: block; }
+        .error-msg { color: #d9534f; display: none; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- STAGE 1: CONSENT -->
+    <div id="stage-consent" class="stage active-stage">
+        <h1>Informed Consent</h1>
+        <div style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; background: #fafafa; font-size: 0.95em;">
+            <p>Thank you for your interest in participating in this research. Please read the information below before consenting to participate.</p>
+            <p><strong>What is this research studying?</strong><br>
+            This study will help us learn how individual traits affect how people pay attention and interact with a computer-based tool while solving a problem.</p>
+            <p><strong>What will I do if I participate?</strong><br>
+            In this study, you will be asked to complete a short questionnaire, then engage in a mock shopping task where you will use an interactive AI interface to find the best skincare option based on your needs. Finally, you will answer a few more questions about your experience. This study does not involve any audio or video recording.</p>
+            <p><strong>What are the benefits of participating in this research?</strong><br>
+            There are no anticipated benefits for your participation in this research.</p>
+            <p><strong>What are the risks of participating in this research?</strong><br>
+            There are no anticipated risks for your participation in this research. We appreciate your time and effort with this research study.</p>
+            <p><strong>Will I receive an incentive or compensation?</strong><br>
+            For your participation, you will receive a payment of $12 per hour. This compensation is managed and disbursed entirely through the Prolific platform.</p>
+            <p><strong>Can I quit if I become uncomfortable?</strong><br>
+            Yes, absolutely. The Institutional Review Board has reviewed this research project and thinks you can participate comfortably. However, you can skip parts of the research you are not comfortable with and stop at any time for any reason. You will keep all the benefits of participating even if you stop. Participating is your choice. Your decision to participate or stop participating will not impact your relationship with the researchers' institution.</p>
+            <p><strong>How long will participation take?</strong><br>
+            We are asking for 15-20 minutes of your time.</p>
+            <p><strong>How are you protecting privacy?</strong><br>
+            Your name will not be linked to any material in reports, publications, or presentations. No one other than the researchers associated with this project will have access to the raw data.</p>
+            <p><strong>What will happen to my data?</strong><br>
+            Identifiers will be removed from your identifiable private information, and after such removal, the de-identified information could be used for future research studies without additional informed consent from you.</p>
+            <p><strong>Contact Information</strong><br>
+            If you have any questions about this research, this study is being run by the research team. Author names and contact details have been withheld from this file during peer review to preserve the anonymity of the review process; full contact information will be restored once the associated manuscript has completed peer review.</p>
+            <p>The researchers' institution also has an Institutional Review Board that protects the rights of people who participate in research.</p>
+        </div>
+        <p>If you would like to continue the survey, please click Next.</p>
+        <button class="btn" onclick="nextStage('stage-demographics')">Next</button>
+    </div>
+
+    <!-- STAGE 2: DEMOGRAPHICS -->
+    <div id="stage-demographics" class="stage">
+        <h2>Part 1: About You</h2>
+        <div class="form-group">
+            <label>1. What is your age?</label>
+            <input type="number" id="age" name="age" style="padding: 8px; width: 100px;">
+        </div>
+        <div class="form-group">
+            <label>2. What is your gender?</label>
+            <select id="gender" name="gender" style="padding: 8px;">
+                <option value="">Select one...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+        <h3>General Opinions</h3>
+        <p>Please indicate your level of agreement (1 = Strongly Disagree, 7 = Strongly Agree):</p>
+        <div class="form-group">
+            <label>3. I am familiar with how AI chatbots (like ChatGPT) work.</label>
+            <div class="likert-scale" id="ctrl_ai_literacy"></div>
+        </div>
+        <div class="form-group">
+            <label>4. I am knowledgeable about skincare products and ingredients.</label>
+            <div class="likert-scale" id="ctrl_product_knowledge"></div>
+        </div>
+        <div class="form-group">
+            <label>5. I generally trust automated systems.</label>
+            <div class="likert-scale" id="ctrl_trust"></div>
+        </div>
+        <div class="error-msg" id="demo-error">Please answer all questions to proceed.</div>
+        <button class="btn" onclick="validateAndProceedToScenario()">Next</button>
+    </div>
+
+    <!-- STAGE 3: SCENARIO -->
+    <div id="stage-scenario" class="stage">
+        <h2>Part 2: The Shopping Task</h2>
+        <div style="background-color: #e8f4fc; padding: 25px; border-radius: 8px; border-left: 6px solid #0056b3;">
+            <h3 style="margin-top:0;">Your Mission</h3>
+            <p>Imagine you are shopping on <strong>DermaAI</strong>, a new website specializing in advanced skincare.</p>
+            <p>Your goal is to <strong>find and evaluate a Face Serum</strong> that specifically targets your skin type.</p>
+            <hr>
+            <p><strong>Instructions:</strong></p>
+            <ol>
+                <li>On the next screen, chat with the AI Agent.</li>
+                <li>Answer its questions about your skin.</li>
+                <li>Wait for it to recommend a specific product.</li>
+                <li><strong>IMPORTANT:</strong> Once the agent gives you the recommendation, it will instruct you to click the <strong>"I have made my decision"</strong> button to finish the task.</li>
+            </ol>
+        </div>
+        <br>
+        <button class="btn" onclick="startExperiment()">Start Shopping Task</button>
+    </div>
+
+    <!-- STAGE 4: EXPERIMENT -->
+    <div id="stage-experiment" class="stage">
+        <h2 id="store-title">DermaAI Assistant</h2>
+        <div id="chat-interface">
+            <div id="chat-window">
+                <!-- Initial Greeting -->
+                <div class="message bot-message">
+                    Hello! Welcome to DermaAI. I am here to find the precise serum for your biology. To start, what is your <strong>skin type</strong>? (e.g., Oily, Dry, or Combination)
+                </div>
+            </div>
+            <div id="typing-indicator" style="display:none; padding: 10px 20px; color: #888; font-style: italic;">Agent is typing...</div>
+            <div id="input-area">
+                <input type="text" id="user-input" placeholder="Type your message here..." onkeypress="handleEnter(event)">
+                <button class="btn" style="margin-top: 0;" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn" id="finish-chat-btn" onclick="nextStage('stage-post-survey')" style="background-color: #28a745; display: none; width: 100%;">I have made my decision - Proceed</button>
+        </div>
+    </div>
+
+    <!-- STAGE 5: POST-SURVEY -->
+    <div id="stage-post-survey" class="stage">
+        <h2>Part 3: Final Questions</h2>
+        <p>Based on your interaction with the chatbot, please answer the following. <br><strong>(1 = Strongly Disagree, 7 = Strongly Agree)</strong></p>
+        <div class="form-group">
+            <label>1. The chatbot was competent.</label>
+            <div class="likert-scale" id="dv_comp_1"></div>
+        </div>
+        <div class="form-group">
+            <label>2. The chatbot was knowledgeable.</label>
+            <div class="likert-scale" id="dv_comp_2"></div>
+        </div>
+        <div class="form-group">
+            <label>3. The chatbot was an expert.</label>
+            <div class="likert-scale" id="dv_comp_3"></div>
+        </div>
+        <div class="form-group">
+            <label>4. Purchasing the skincare product recommended by this chatbot is risky.</label>
+            <div class="likert-scale" id="dv_risk_1"></div>
+        </div>
+        <div class="form-group">
+            <label>5. I would worry that the recommended product might not work for me.</label>
+            <div class="likert-scale" id="dv_risk_2"></div>
+        </div>
+        <div class="form-group">
+            <label>6. There is a high chance that the product recommended by this chatbot would be a waste of money.</label>
+            <div class="likert-scale" id="dv_risk_3"></div>
+        </div>
+        <div class="form-group">
+            <label>7. I would purchase the product recommended by this chatbot.</label>
+            <div class="likert-scale" id="dv_pi_1"></div>
+        </div>
+        <div class="form-group">
+            <label>8. I would be willing to rely on this chatbot's advice for my purchase.</label>
+            <div class="likert-scale" id="dv_pi_2"></div>
+        </div>
+        <div class="form-group">
+            <label>9. It is likely that I would transact with this agent.</label>
+            <div class="likert-scale" id="dv_pi_3"></div>
+        </div>
+        <div class="error-msg" id="post-error">Please answer all questions.</div>
+        <button class="btn" onclick="submitData()">Submit & Finish</button>
+    </div>
+
+    <!-- STAGE 6: DEBRIEF -->
+    <div id="stage-debrief" class="stage">
+        <h2>Thank You</h2>
+        <div style="background: #d4edda; color: #155724; padding: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
+            <p><strong>Your response has been recorded.</strong></p>
+            <p>Your completion code is: <strong>STUDY1-COMP-DONE</strong></p>
+        </div>
+        <p>You may now close this window/tab.</p>
+        <textarea id="final-data-view" style="width: 100%; height: 100px; margin-top: 20px; display:none;" readonly></textarea>
+    </div>
+
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    const API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Do not commit real keys — set your own key locally (e.g., via a gitignored config file)
+    const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+    const condition = Math.random() < 0.5 ? 'low' : 'high';
+    
+    // --- PRODUCT IMAGE (Embedded Base64 for a generic serum bottle icon) ---
+    // This ensures the image NEVER breaks.
+    const PRODUCT_IMAGE_SRC = "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1887&auto=format&fit=crop";
+
+    let experimentData = { condition, demographics: {}, controls: {}, chatLog: [], postSurvey: {}, timestamp: new Date().toISOString() };
+
+    // --- REVISED PROMPT LOGIC (Turn-Based) ---
+    // The prompts below strictly enforce the "Ask Simple -> Analyze Complex -> Rec" flow.
+    
+    const COMMON_INSTRUCTION = `
+        RULES FOR INTERACTION:
+        1. You must maintain a back-and-forth conversation. DO NOT give the recommendation immediately.
+        2. Ask questions in very SIMPLE English (easy for anyone to understand).
+        3. AFTER the user answers, you must analyze their answer.
+        4. ONLY give the final recommendation after you have asked at least 2 questions.
+        
+        FINAL RECOMMENDATION FORMAT:
+        - When you finally recommend the product, show this image: <img src="${PRODUCT_IMAGE_SRC}" class="product-img" />
+        - Display details in a Markdown Table.
+        - Add this exact line at the very end: "I have provided my best recommendation. If you are ready to decide, please click the green 'I have made my decision' button below."
+    `;
+
+    const PROMPTS = {
+        high: `You are Dr. Derm, an expert dermatologist AI. 
+               YOUR BEHAVIOR:
+               - Ask diagnostic questions in SIMPLE English (e.g., "Is the oil mostly on your forehead?").
+               - When the user answers, analyze it using SOPHISTICATED MEDICAL TERMINOLOGY (e.g., "Ah, localized seborrhea in the T-zone suggests..."). This shows your competence.
+               - Be precise, accurate, and structured.
+               - Recommend "DermaAI Sebum Regulator 10X" (Price: $78).
+               ${COMMON_INSTRUCTION}`,
+        
+        low: `You are a novice assistant AI.
+               YOUR BEHAVIOR:
+               - Ask diagnostic questions in SIMPLE English.
+               - When the user answers, analyze it using VAGUE/SIMPLE terms (e.g., "Okay, so you have some grease there..."). Be unsure ("I think that might be bad?").
+               - Be unstructured and slightly unprofessional.
+               - Recommend "DermaAI Sebum Regulator 10X" (Price: $78).
+               ${COMMON_INSTRUCTION}`
+    };
+
+    window.onload = function() {
+        const likerts = ['ctrl_ai_literacy', 'ctrl_product_knowledge', 'ctrl_trust','dv_comp_1', 'dv_comp_2', 'dv_comp_3','dv_risk_1', 'dv_risk_2', 'dv_risk_3','dv_pi_1', 'dv_pi_2', 'dv_pi_3'];
+        likerts.forEach(id => generateLikertOptions(id, id));
+    };
+
+    function nextStage(stageId) {
+        document.querySelectorAll('.stage').forEach(el => el.classList.remove('active-stage'));
+        document.getElementById(stageId).classList.add('active-stage');
+        window.scrollTo(0, 0);
+    }
+
+    function validateAndProceedToScenario() {
+        const age = document.getElementById('age').value;
+        const gender = document.getElementById('gender').value;
+        if(!age || !gender || !document.querySelector('input[name="ctrl_ai_literacy"]:checked') || !document.querySelector('input[name="ctrl_product_knowledge"]:checked') || !document.querySelector('input[name="ctrl_trust"]:checked')) {
+            document.getElementById('demo-error').style.display = 'block';
+            return;
+        }
+        experimentData.demographics = { age, gender };
+        nextStage('stage-scenario');
+    }
+
+    function startExperiment() {
+        nextStage('stage-experiment');
+        document.getElementById('chat-interface').style.display = 'flex';
+    }
+
+    let chatHistory = []; 
+
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const userText = inputField.value.trim();
+        if (!userText) return;
+
+        addMessageToUI('user', userText);
+        inputField.value = '';
+        document.getElementById('typing-indicator').style.display = 'block';
+
+        let contents = chatHistory.map(msg => ({ role: msg.role === 'user' ? 'user' : 'model', parts: [{ text: msg.text }] }));
+        contents.push({ role: "user", parts: [{ text: userText }] });
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+        const payload = { contents: contents, systemInstruction: { parts: [{ text: PROMPTS[condition] }] } };
+
+        try {
+            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const data = await response.json();
+            document.getElementById('typing-indicator').style.display = 'none';
+            if (data.candidates && data.candidates[0].content) {
+                const botText = data.candidates[0].content.parts[0].text;
+                addMessageToUI('bot', botText);
+                if (botText.includes("decision button") || botText.includes("green")) {
+                    document.getElementById('finish-chat-btn').style.display = 'inline-block';
+                }
+            }
+        } catch (error) { console.error(error); }
+    }
+
+    function addMessageToUI(role, text) {
+        const chatWindow = document.getElementById('chat-window');
+        const div = document.createElement('div');
+        div.className = `message ${role}-message`;
+        div.innerHTML = marked.parse(text); 
+        chatWindow.appendChild(div);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        chatHistory.push({ role, text });
+        experimentData.chatLog.push({ role, text, time: Date.now() });
+    }
+
+    function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
+
+    function submitData() {
+        const ids = ['dv_comp_1', 'dv_comp_2', 'dv_comp_3','dv_risk_1', 'dv_risk_2', 'dv_risk_3','dv_pi_1', 'dv_pi_2', 'dv_pi_3'];
+        let allAnswered = true;
+        ids.forEach(id => { if (!document.querySelector(`input[name="${id}"]:checked`)) allAnswered = false; });
+        if (!allAnswered) { document.getElementById('post-error').style.display = 'block'; return; }
+        ids.forEach(id => { experimentData.postSurvey[id] = document.querySelector(`input[name="${id}"]:checked`).value; });
+        document.getElementById('final-data-view').value = JSON.stringify(experimentData);
+        nextStage('stage-debrief');
+    }
+
+    function generateLikertOptions(containerId, name) {
+        const container = document.getElementById(containerId);
+        let html = '';
+        for (let i = 1; i <= 7; i++) { html += `<div class="likert-option"><input type="radio" name="${name}" value="${i}"><br>${i}</div>`; }
+        container.innerHTML = html;
+    }
+</script>
+
+</body>
+</html>

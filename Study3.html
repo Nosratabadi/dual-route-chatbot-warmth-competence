@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Study 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #333; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .btn { background-color: #0056b3; color: white; border: none; padding: 12px 25px; font-size: 16px; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 20px; }
+        .btn:hover { background-color: #004494; }
+        .form-group { margin-bottom: 25px; background: #fdfdfd; padding: 15px; border-radius: 5px; border: 1px solid #eee; }
+        label { display: block; margin-bottom: 10px; font-weight: bold; }
+        .likert-scale { display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 10px; }
+        .likert-option { text-align: center; flex: 1; font-size: 0.9em; }
+        .likert-option input { margin-bottom: 5px; cursor: pointer; }
+        #chat-interface { display: none; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; height: 650px; display: flex; flex-direction: column; background: #fff; }
+        #chat-window { flex: 1; padding: 20px; overflow-y: auto; background-color: #f8f9fa; }
+        .message { margin-bottom: 15px; max-width: 85%; padding: 12px 18px; border-radius: 12px; line-height: 1.5; font-size: 15px; }
+        .bot-message { background-color: #e9ecef; color: #333; align-self: flex-start; margin-right: auto; border-bottom-left-radius: 2px; }
+        .user-message { background-color: #0056b3; color: white; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 2px; }
+        .bot-message table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; font-size: 0.9em; }
+        .bot-message th, .bot-message td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .bot-message th { background-color: #f2f2f2; font-weight: bold; }
+        .product-img { width: 200px; height: 200px; object-fit: cover; display: block; margin: 10px auto; border-radius: 8px; border: 1px solid #ccc; padding: 5px; background: white; }
+        #input-area { display: flex; padding: 15px; background: #fff; border-top: 1px solid #ddd; }
+        #user-input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; font-size: 15px; }
+        .stage { display: none; }
+        .active-stage { display: block; }
+        .error-msg { color: #d9534f; display: none; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- STAGE 1: CONSENT -->
+    <div id="stage-consent" class="stage active-stage">
+        <h1>Informed Consent</h1>
+        <div style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; background: #fafafa; font-size: 0.95em;">
+            <p>Thank you for your interest in participating in this research. Please read the information below before consenting to participate.</p>
+            <p><strong>What is this research studying?</strong><br>
+            This study will help us learn how individual traits affect how people pay attention and interact with a computer-based tool while solving a problem.</p>
+            <p><strong>What will I do if I participate?</strong><br>
+            In this study, you will be asked to complete a short questionnaire, then engage in a mock shopping task where you will use an interactive AI interface to find the best product based on your needs. Finally, you will answer a few more questions about your experience. This study does not involve any audio or video recording.</p>
+            <p><strong>What are the benefits of participating in this research?</strong><br>
+            There are no anticipated benefits for your participation in this research.</p>
+            <p><strong>What are the risks of participating in this research?</strong><br>
+            There are no anticipated risks for your participation in this research. We appreciate your time and effort with this research study.</p>
+            <p><strong>Will I receive an incentive or compensation?</strong><br>
+            For your participation, you will receive a payment of $12 per hour. This compensation is managed and disbursed entirely through the Prolific platform.</p>
+            <p><strong>Can I quit if I become uncomfortable?</strong><br>
+            Yes, absolutely. The Institutional Review Board has reviewed this research project and thinks you can participate comfortably. However, you can skip parts of the research you are not comfortable with and stop at any time for any reason. You will keep all the benefits of participating even if you stop. Participating is your choice. Your decision to participate or stop participating will not impact your relationship with the researchers' institution.</p>
+            <p><strong>How long will participation take?</strong><br>
+            We are asking for 15-20 minutes of your time.</p>
+            <p><strong>How are you protecting privacy?</strong><br>
+            Your name will not be linked to any material in reports, publications, or presentations. No one other than the researchers associated with this project will have access to the raw data.</p>
+            <p><strong>What will happen to my data?</strong><br>
+            Identifiers will be removed from your identifiable private information, and after such removal, the de-identified information could be used for future research studies without additional informed consent from you.</p>
+            <p><strong>Contact Information</strong><br>
+            If you have any questions about this research, this study is being run by the research team. Author names and contact details have been withheld from this file during peer review to preserve the anonymity of the review process; full contact information will be restored once the associated manuscript has completed peer review.</p>
+            <p>The researchers' institution also has an Institutional Review Board that protects the rights of people who participate in research.</p>
+        </div>
+        <p>If you would like to continue the survey, please click Next.</p>
+        <button class="btn" onclick="nextStage('stage-demographics')">Next</button>
+    </div>
+
+    <!-- STAGE 2: DEMOGRAPHICS -->
+    <div id="stage-demographics" class="stage">
+        <h2>Part 1: About You</h2>
+        <div class="form-group">
+            <label>1. What is your age?</label>
+            <input type="number" id="age" name="age" style="padding: 8px; width: 100px;">
+        </div>
+        <div class="form-group">
+            <label>2. What is your gender?</label>
+            <select id="gender" name="gender" style="padding: 8px;">
+                <option value="">Select one...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+        <h3>General Opinions</h3>
+        <p>Please indicate your level of agreement (1 = Strongly Disagree, 7 = Strongly Agree):</p>
+        <div class="form-group">
+            <label>3. I am familiar with how AI chatbots (like ChatGPT) work.</label>
+            <div class="likert-scale" id="ctrl_ai_literacy"></div>
+        </div>
+        <div class="form-group">
+            <label id="product_knowledge_label">4. I am knowledgeable about skincare products and ingredients.</label>
+            <div class="likert-scale" id="ctrl_product_knowledge"></div>
+        </div>
+        <div class="error-msg" id="demo-error">Please answer all questions to proceed.</div>
+        <button class="btn" onclick="validateAndProceedToScenario()">Next</button>
+    </div>
+
+    <!-- STAGE 3: SCENARIO -->
+    <div id="stage-scenario" class="stage">
+        <h2>Part 2: The Shopping Task</h2>
+        <div id="scenario-box" style="background-color: #e8f4fc; padding: 25px; border-radius: 8px; border-left: 6px solid #0056b3;">
+            <!-- JS will populate based on product type -->
+        </div>
+        <br>
+        <button class="btn" onclick="startExperiment()">Start Shopping Task</button>
+    </div>
+
+    <!-- STAGE 4: EXPERIMENT -->
+    <div id="stage-experiment" class="stage">
+        <h2 id="store-title">AI Assistant</h2>
+        <div id="chat-interface">
+            <div id="chat-window">
+                <div class="message bot-message" id="initial-greeting"></div>
+            </div>
+            <div id="typing-indicator" style="display:none; padding: 10px 20px; color: #888; font-style: italic;">Agent is typing...</div>
+            <div id="input-area">
+                <input type="text" id="user-input" placeholder="Type your message here..." onkeypress="handleEnter(event)">
+                <button class="btn" style="margin-top: 0;" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn" id="finish-chat-btn" onclick="nextStage('stage-post-survey')" style="background-color: #28a745; display: none; width: 100%;">I have made my decision - Proceed</button>
+        </div>
+    </div>
+
+    <!-- STAGE 5: POST-SURVEY -->
+    <div id="stage-post-survey" class="stage">
+        <h2>Part 3: Final Questions</h2>
+        <p>Based on your interaction with the chatbot, please answer the following. <br><strong>(1 = Strongly Disagree, 7 = Strongly Agree)</strong></p>
+        
+        <!-- Perceived Competence (3 items) -->
+        <div class="form-group">
+            <label>1. The chatbot was intelligent.</label>
+            <div class="likert-scale" id="dv_comp_1"></div>
+        </div>
+        <div class="form-group">
+            <label>2. The chatbot was competent.</label>
+            <div class="likert-scale" id="dv_comp_2"></div>
+        </div>
+        <div class="form-group">
+            <label>3. The chatbot was confident.</label>
+            <div class="likert-scale" id="dv_comp_3"></div>
+        </div>
+
+        <!-- Perceived Warmth (4 items) -->
+        <div class="form-group">
+            <label>4. The chatbot was sincere.</label>
+            <div class="likert-scale" id="dv_warmth_1"></div>
+        </div>
+        <div class="form-group">
+            <label>5. The chatbot was good-natured.</label>
+            <div class="likert-scale" id="dv_warmth_2"></div>
+        </div>
+        <div class="form-group">
+            <label>6. The chatbot was warm.</label>
+            <div class="likert-scale" id="dv_warmth_3"></div>
+        </div>
+        <div class="form-group">
+            <label>7. The chatbot was tolerant.</label>
+            <div class="likert-scale" id="dv_warmth_4"></div>
+        </div>
+
+        <!-- Perceived Risk (3 items) -->
+        <div class="form-group">
+            <label id="risk_label_1">8. I think purchasing through this chatbot is risky.</label>
+            <div class="likert-scale" id="dv_risk_1"></div>
+        </div>
+        <div class="form-group">
+            <label>9. The product recommended may not perform as expected.</label>
+            <div class="likert-scale" id="dv_risk_2"></div>
+        </div>
+        <div class="form-group">
+            <label>10. I might lose money if I purchase through this chatbot.</label>
+            <div class="likert-scale" id="dv_risk_3"></div>
+        </div>
+
+        <!-- User Engagement (3 items) -->
+        <div class="form-group">
+            <label>11. I was really drawn into my shopping task.</label>
+            <div class="likert-scale" id="dv_engage_1"></div>
+        </div>
+        <div class="form-group">
+            <label>12. I felt involved in this shopping task.</label>
+            <div class="likert-scale" id="dv_engage_2"></div>
+        </div>
+        <div class="form-group">
+            <label>13. This shopping experience was fun.</label>
+            <div class="likert-scale" id="dv_engage_3"></div>
+        </div>
+
+        <!-- Purchase Intention (3 items) -->
+        <div class="form-group">
+            <label id="pi_label_1">14. How likely would you be to purchase the recommended product?</label>
+            <div class="likert-scale" id="dv_pi_1"></div>
+        </div>
+        <div class="form-group">
+            <label>15. How probable is it that you would consider purchasing this product?</label>
+            <div class="likert-scale" id="dv_pi_2"></div>
+        </div>
+        <div class="form-group">
+            <label>16. How likely would you be to purchase this product, given the information provided by the chatbot?</label>
+            <div class="likert-scale" id="dv_pi_3"></div>
+        </div>
+
+        <!-- Perceived Effort (3 items; Söderlund et al., 2022) -->
+        <div class="form-group">
+            <label>17. The virtual agent was working hard to take care of me.</label>
+            <div class="likert-scale" id="dv_effort_1"></div>
+        </div>
+        <div class="form-group">
+            <label>18. The virtual agent expended a lot of effort to help me.</label>
+            <div class="likert-scale" id="dv_effort_2"></div>
+        </div>
+        <div class="form-group">
+            <label>19. The virtual agent really had to "walk an extra mile" in the encounter.</label>
+            <div class="likert-scale" id="dv_effort_3"></div>
+        </div>
+
+        <!-- Perceived Humanness (3 items; Söderlund et al., 2022) -->
+        <div class="form-group">
+            <label>20. The virtual agent behaved very much like a human.</label>
+            <div class="likert-scale" id="dv_human_1"></div>
+        </div>
+        <div class="form-group">
+            <label>21. The virtual agent was humanlike.</label>
+            <div class="likert-scale" id="dv_human_2"></div>
+        </div>
+        <div class="form-group">
+            <label>22. The virtual agent acted like humans typically do.</label>
+            <div class="likert-scale" id="dv_human_3"></div>
+        </div>
+
+        <!-- Attention Check -->
+        <div class="form-group">
+            <label>23. To confirm you are reading each item, please select "2" for this statement.</label>
+            <div class="likert-scale" id="dv_attention_check"></div>
+        </div>
+
+        <!-- Perceived Formality (1 item; adapted from Nguyen et al., 2023) -->
+        <div class="form-group">
+            <label>24. The chatbot's language felt informal (1) to formal (7).</label>
+            <div class="likert-scale" id="dv_formality"></div>
+        </div>
+
+        <!-- Product-Type / Think-Feel Classification (4 items; Chang &amp; Wu, 2012) -->
+        <div class="form-group">
+            <label>25. Buying this product is not mainly logical or objective (1) — Buying this product is mainly logical or objective (7).</label>
+            <div class="likert-scale" id="dv_fcb_1"></div>
+        </div>
+        <div class="form-group">
+            <label>26. Buying this product is not based mainly on functional facts (1) — Buying this product is based mainly on functional facts (7).</label>
+            <div class="likert-scale" id="dv_fcb_2"></div>
+        </div>
+        <div class="form-group">
+            <label>27. Buying this product is based on little feeling (1) — Buying this product is based on a great deal of feeling (7).</label>
+            <div class="likert-scale" id="dv_fcb_3"></div>
+        </div>
+        <div class="form-group">
+            <label>28. Buying this product is not based on looks, taste, touch, smell, or sound (1) — Buying this product is based on looks, taste, touch, smell, or sound (7).</label>
+            <div class="likert-scale" id="dv_fcb_4"></div>
+        </div>
+
+        <div class="error-msg" id="post-error">Please answer all questions.</div>
+        <button class="btn" onclick="submitData()">Submit & Finish</button>
+    </div>
+
+    <!-- STAGE 6: DEBRIEF -->
+    <div id="stage-debrief" class="stage">
+        <h2>Thank You</h2>
+        <div style="background: #d4edda; color: #155724; padding: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
+            <p><strong>Thank you for participating. The experiment is now complete.</strong></p>
+        </div>
+        <p>You will be redirected back to Prolific shortly.</p>
+    </div>
+
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    const API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Do not commit real keys — set your own key locally (e.g., via a gitignored config file)
+    const MODEL_NAME = "gemini-3.5-flash";
+
+    // --- PROLIFIC / SESSION IDENTIFIERS (from Prolific's URL parameters) ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const prolificId = urlParams.get('PROLIFIC_PID') || 'not_provided';
+    const studyId = urlParams.get('STUDY_ID') || 'not_provided';
+    const sessionId = urlParams.get('SESSION_ID') || 'not_provided';
+
+    // --- DATA DESTINATION (Google Sheet via Apps Script Web App) ---
+    // Setup: 1) Create a Google Sheet with a header row matching the field names in
+    // buildFlatRecord() below. 2) In the Sheet, go to Extensions > Apps Script and add a
+    // doPost(e) function that reads JSON.parse(e.postData.contents) and appends it as a row
+    // via SpreadsheetApp. 3) Deploy > New deployment > Web app (execute as you, access:
+    // Anyone), then paste the resulting /exec URL below.
+    const GOOGLE_SHEET_URL = "Google sheet address/URL here";
+
+    // --- PROLIFIC COMPLETION CODE ---
+    // Set up in your Prolific study as a URL-based ("redirect") completion, not a
+    // manually-typed code - the participant never sees this value on screen; the redirect
+    // below sends it straight to Prolific so completion is recorded automatically.
+    const PROLIFIC_COMPLETION_CODE = "Your Prolific completion code here";
+
+    // --- BEHAVIORAL TRACKING ---
+    let startTime = null;
+    let userWordCount = 0;
+
+    // --- PRODUCT CATALOGS ---
+    const SKINCARE_PRODUCTS = {
+        dry_sensitive: { name: "HydraCalm Gentle Serum", price: "$48", image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400" },
+        dry_mature: { name: "HydraLux Anti-Aging Serum", price: "$65", image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400" },
+        oily_acne: { name: "ClearControl Clarifying Serum", price: "$42", image: "https://images.unsplash.com/photo-1617897903246-719242758050?w=400" },
+        oily_pores: { name: "PoreRefine Minimizing Serum", price: "$45", image: "https://images.unsplash.com/photo-1570194065650-d99fb4b38b17?w=400" }
+    };
+
+    const LAPTOP_PRODUCTS = {
+        productivity_light: { name: "ProBook Essential 14", price: "$699", image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400" },
+        productivity_heavy: { name: "ProBook Ultra 15", price: "$1,299", image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400" },
+        gaming_casual: { name: "GameStart 15", price: "$899", image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400" },
+        gaming_hardcore: { name: "GameMax Pro 17", price: "$1,899", image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400" }
+    };
+
+    // --- 2x2x2 RANDOM ASSIGNMENT ---
+    // NOTE: true cross-participant stratified/blocked assignment needs a shared, always-
+    // available counter. Two different attempts at that both broke page load in real
+    // testing here (a stalled fetch hung the page, then an AbortSignal failed to serialize
+    // when the request got proxied) - reliability matters more than marginal balance
+    // improvement, so this is back to simple, synchronous, zero-network-dependency
+    // assignment: one random draw over the 8 conditions below (statistically the same as
+    // 3 independent coin flips - genuine stratification isn't possible without a server).
+    const CONDITIONS = [
+        { productType: 'laptop',   competenceLevel: 'low',  warmthLevel: 'high' },
+        { productType: 'skincare', competenceLevel: 'high', warmthLevel: 'low'  },
+        { productType: 'laptop',   competenceLevel: 'high', warmthLevel: 'high' },
+        { productType: 'skincare', competenceLevel: 'low',  warmthLevel: 'low'  },
+        { productType: 'skincare', competenceLevel: 'high', warmthLevel: 'high' },
+        { productType: 'laptop',   competenceLevel: 'low',  warmthLevel: 'low'  },
+        { productType: 'skincare', competenceLevel: 'low',  warmthLevel: 'high' },
+        { productType: 'laptop',   competenceLevel: 'high', warmthLevel: 'low'  }
+    ];
+    const condition = CONDITIONS[Math.floor(Math.random() * CONDITIONS.length)];
+    const productType = condition.productType;
+    const competenceLevel = condition.competenceLevel;
+    const warmthLevel = condition.warmthLevel;
+    const PRODUCTS = productType === 'skincare' ? SKINCARE_PRODUCTS : LAPTOP_PRODUCTS;
+
+    let experimentData = {
+        condition: { productType, competenceLevel, warmthLevel },
+        demographics: {},
+        controls: {},
+        chatLog: [],
+        postSurvey: {},
+        timestamp: new Date().toISOString(),
+        behavioral_time_on_task: 0,
+        behavioral_word_count: 0
+    };
+
+    // --- SCENARIOS ---
+    const SCENARIOS = {
+        skincare: `
+            <h3 style="margin-top:0;">Your Mission</h3>
+            <p>Imagine you are shopping on <strong>DermaAI</strong>, a new website specializing in advanced skincare.</p>
+            <p>Your goal is to <strong>find and evaluate a Face Serum</strong> that specifically targets your skin type.</p>
+            <hr>
+            <p><strong>Instructions:</strong></p>
+            <ol>
+                <li>On the next screen, chat with the AI Agent.</li>
+                <li>Answer its questions about your skin.</li>
+                <li>Wait for it to recommend a specific product.</li>
+                <li><strong>IMPORTANT:</strong> Once the agent gives you the recommendation, it will instruct you to click the <strong>"I have made my decision"</strong> button to finish the task.</li>
+            </ol>
+        `,
+        laptop: `
+            <h3 style="margin-top:0;">Your Mission</h3>
+            <p>Imagine you are shopping on <strong>TechAdvisor</strong>, a new website specializing in laptops and computers.</p>
+            <p>Your goal is to <strong>find and evaluate a Laptop</strong> that specifically fits your needs.</p>
+            <hr>
+            <p><strong>Instructions:</strong></p>
+            <ol>
+                <li>On the next screen, chat with the AI Agent.</li>
+                <li>Answer its questions about your computing needs.</li>
+                <li>Wait for it to recommend a specific product.</li>
+                <li><strong>IMPORTANT:</strong> Once the agent gives you the recommendation, it will instruct you to click the <strong>"I have made my decision"</strong> button to finish the task.</li>
+            </ol>
+        `
+    };
+
+    // --- GREETINGS (warmth-only; competence is confined to the recommendation stage - see Methods note) ---
+    const GREETINGS = {
+        skincare: {
+            high: "Hi there, and welcome to DermaAI! I'm happy to help you find what you need. To start, could you tell me your <strong>skin type</strong> — dry, or oily?",
+            low: "Hello, and welcome to DermaAI. I ask a short series of questions to identify skin type and recommend a matching product. To start, please state your <strong>skin type</strong> — dry, or oily?"
+        },
+        laptop: {
+            high: "Hi there, and welcome to TechAdvisor! I'm happy to help you find what you need. To start, will this mainly be for <strong>work</strong>, or <strong>gaming</strong>?",
+            low: "Hello, and welcome to TechAdvisor. I ask a short series of questions to identify laptop needs and recommend a matching product. To start, will this mainly be for <strong>work</strong>, or <strong>gaming</strong>?"
+        }
+    };
+
+    // --- Q2 (BRANCH QUESTION) — warmth-only, hardcoded the same way as GREETINGS ---
+    const Q2_MESSAGES = {
+        skincare: {
+            dry:  { high: "Great! Is your skin sensitive, or are you looking for anti-aging benefits?",
+                    low:  "Noted. Is your skin sensitive, or are you looking for anti-aging benefits?" },
+            oily: { high: "Great! Is your main concern acne and breakouts, or enlarged pores?",
+                    low:  "Noted. Is your main concern acne and breakouts, or enlarged pores?" }
+        },
+        laptop: {
+            productivity: { high: "Great! Will this mainly be for basic tasks like browsing and documents, or heavier workloads like video editing?",
+                            low:  "Noted. Will this mainly be for basic tasks like browsing and documents, or heavier workloads like video editing?" },
+            gaming: { high: "Great! Are you a casual gamer, or looking to play the newest titles at high settings?",
+                      low:  "Noted. Are you a casual gamer, or looking to play the newest titles at high settings?" }
+        }
+    };
+
+    // --- RECOMMENDATION LEAD-IN — warmth-only, hardcoded the same way as GREETINGS ---
+    const REC_LEAD = {
+        high: "I'm glad I could help today — here's what I'd recommend:",
+        low: "I've matched this to the criteria provided — here's the recommended product:"
+    };
+
+    // --- BRANCH/SKU CLASSIFIERS (keyword-based; no Gemini call, so display wording can never drift) ---
+    function classifyQ1(text, pType) {
+        const t = text.toLowerCase();
+        return pType === 'skincare'
+            ? (t.includes('oily') ? 'oily' : 'dry')
+            : (t.includes('gam') ? 'gaming' : 'productivity');
+    }
+    function classifyQ2(text, pType, branch) {
+        const t = text.toLowerCase();
+        if (pType === 'skincare') {
+            return branch === 'dry'
+                ? (/anti|aging|mature/.test(t) ? 'dry_mature' : 'dry_sensitive')
+                : (t.includes('pore') ? 'oily_pores' : 'oily_acne');
+        }
+        return branch === 'productivity'
+            ? (/heavy|video|edit/.test(t) ? 'productivity_heavy' : 'productivity_light')
+            : (/hardcore|aaa|high/.test(t) ? 'gaming_hardcore' : 'gaming_casual');
+    }
+    let conversationBranch = null;
+
+    // --- PRODUCT SPECS ---
+    const SPECS = {
+        skincare: {
+            dry_sensitive: {
+                high: "Contains ceramide NP (2%), sodium hyaluronate (1.5%), centella asiatica extract. Dermatologically tested, pH 5.5, fragrance-free formula. Clinical studies show 89% improvement in skin barrier function within 4 weeks.",
+                low: "Has some good hydrating stuff in it. Should help with dry sensitive skin. Pretty gentle formula."
+            },
+            dry_mature: {
+                high: "Formulated with retinol (0.3%), peptide complex (Matrixyl 3000), hyaluronic acid (2%). Clinically proven to reduce wrinkles by 23% in 8 weeks. Contains antioxidant complex with vitamin C and E derivatives.",
+                low: "Has anti-aging ingredients and moisturizing things. Should help with wrinkles I think. Good for older dry skin."
+            },
+            oily_acne: {
+                high: "Contains salicylic acid (2%), niacinamide (5%), zinc PCA (1%). Non-comedogenic, oil-free formulation. Clinical trials demonstrate 40% reduction in sebum production and 67% decrease in inflammatory acne lesions.",
+                low: "Has acne-fighting ingredients. Pretty good for oily skin with breakouts. Should help clear things up."
+            },
+            oily_pores: {
+                high: "Features niacinamide (10%), BHA (0.5%), green tea extract. Visibly minimizes pore appearance by 31% in 4 weeks per clinical assessment. Mattifying effect demonstrated to last 8+ hours in humidity testing.",
+                low: "Good for making pores look smaller. Has some nice ingredients for oily skin. Keeps skin less shiny."
+            }
+        },
+        laptop: {
+            productivity_light: {
+                high: "Intel Core i5-1235U (10-core, up to 4.4GHz), 8GB DDR4-3200 RAM, 256GB NVMe SSD (read: 3500MB/s). 14\" FHD IPS display (1920x1080, 300 nits, 60Hz). 52Wh battery providing 10-hour runtime. Weight: 1.4kg.",
+                low: "Has a decent processor and enough memory for basic tasks. Pretty light laptop with good battery life. Should handle everyday stuff fine."
+            },
+            productivity_heavy: {
+                high: "Intel Core i7-1365U (12-core, up to 5.2GHz), 32GB DDR5-4800 RAM, 1TB NVMe SSD (read: 7000MB/s). 15.6\" 2.8K OLED display (2880x1800, 400 nits, 90Hz, 100% DCI-P3). Thunderbolt 4 ports. 72Wh battery, 12-hour runtime.",
+                low: "Fast processor with lots of memory. Nice big screen that looks pretty good. Should handle heavy work I think. Good for professional stuff."
+            },
+            gaming_casual: {
+                high: "AMD Ryzen 5 7535HS (6-core, up to 4.5GHz), NVIDIA RTX 4050 (6GB GDDR6, 2370 CUDA cores), 16GB DDR5 RAM, 512GB NVMe SSD. 15.6\" FHD 144Hz display (7ms response). Benchmarks: 60+ FPS on AAA titles at medium-high settings.",
+                low: "Has gaming graphics card and good processor. Can play most games pretty well. Screen refreshes fast for smoother gaming."
+            },
+            gaming_hardcore: {
+                high: "Intel Core i9-14900HX (24-core, up to 5.8GHz), NVIDIA RTX 4070 (8GB GDDR6, 4608 CUDA cores), 32GB DDR5-5600 RAM, 1TB NVMe SSD. 17.3\" QHD 240Hz display (3ms response, G-Sync). Advanced vapor chamber cooling. Ray tracing benchmarks: 100+ FPS on Cyberpunk 2077 at Ultra settings.",
+                low: "Really powerful for gaming. Has top graphics card and super fast screen. Should run everything on high settings no problem."
+            }
+        }
+    };
+
+    // --- SYSTEM PROMPTS ---
+    function buildSystemPrompt() {
+        const isWarm = warmthLevel === 'high';
+        const isCompetent = competenceLevel === 'high';
+        const isSkincare = productType === 'skincare';
+
+        let warmthInstructions = isWarm ? `
+WARMTH STYLE (REQUIRED - HIGH):
+- Adopt a warm, positive, personal disposition toward helping (e.g., state that you are glad or happy to help).
+- Refer to yourself using "I" throughout.
+- Do not use emojis.
+        ` : `
+WARMTH STYLE (REQUIRED - LOW):
+- Adopt a neutral, informational disposition; describe your process directly (e.g., state what steps you take) rather than expressing personal enthusiasm.
+- Refer to yourself using "I" throughout.
+- Do not use emojis.
+        `;
+
+        let competenceInstructions = `
+COMPETENCE STYLE:
+- Maintain the same natural, neutral conversational tone regardless of competence condition; do not vary conversational style by competence level.
+- Competence differences are expressed only in the product specification given with your final recommendation (see RECOMMENDATION FORMAT below), never in how you converse.
+        `;
+
+        let productLogic = isSkincare ? `
+PRODUCT CONTEXT: You are a skincare consultant for DermaAI.
+
+DIAGNOSTIC FLOW:
+1. First ask: Is skin DRY or OILY?
+2. If DRY: Ask if they have SENSITIVE skin or are looking for ANTI-AGING benefits.
+3. If OILY: Ask if main concern is ACNE/breakouts or ENLARGED PORES.
+
+PRODUCT MATCHING (choose ONE):
+- Dry + Sensitive → ${SKINCARE_PRODUCTS.dry_sensitive.name} (${SKINCARE_PRODUCTS.dry_sensitive.price})
+- Dry + Anti-aging/Mature → ${SKINCARE_PRODUCTS.dry_mature.name} (${SKINCARE_PRODUCTS.dry_mature.price})
+- Oily + Acne → ${SKINCARE_PRODUCTS.oily_acne.name} (${SKINCARE_PRODUCTS.oily_acne.price})
+- Oily + Pores → ${SKINCARE_PRODUCTS.oily_pores.name} (${SKINCARE_PRODUCTS.oily_pores.price})
+
+IMAGE URLS:
+- ${SKINCARE_PRODUCTS.dry_sensitive.name}: ${SKINCARE_PRODUCTS.dry_sensitive.image}
+- ${SKINCARE_PRODUCTS.dry_mature.name}: ${SKINCARE_PRODUCTS.dry_mature.image}
+- ${SKINCARE_PRODUCTS.oily_acne.name}: ${SKINCARE_PRODUCTS.oily_acne.image}
+- ${SKINCARE_PRODUCTS.oily_pores.name}: ${SKINCARE_PRODUCTS.oily_pores.image}
+        ` : `
+PRODUCT CONTEXT: You are a laptop consultant for TechAdvisor.
+
+DIAGNOSTIC FLOW:
+1. First ask: Is primary use PRODUCTIVITY/WORK or GAMING?
+2. If PRODUCTIVITY: Ask if they need it for BASIC tasks (browsing, documents) or HEAVY workloads (video editing, data analysis).
+3. If GAMING: Ask if they are a CASUAL gamer or want to play AAA titles at HIGH settings.
+
+PRODUCT MATCHING (choose ONE):
+- Productivity + Basic/Light → ${LAPTOP_PRODUCTS.productivity_light.name} (${LAPTOP_PRODUCTS.productivity_light.price})
+- Productivity + Heavy/Professional → ${LAPTOP_PRODUCTS.productivity_heavy.name} (${LAPTOP_PRODUCTS.productivity_heavy.price})
+- Gaming + Casual → ${LAPTOP_PRODUCTS.gaming_casual.name} (${LAPTOP_PRODUCTS.gaming_casual.price})
+- Gaming + Hardcore/Serious → ${LAPTOP_PRODUCTS.gaming_hardcore.name} (${LAPTOP_PRODUCTS.gaming_hardcore.price})
+
+IMAGE URLS:
+- ${LAPTOP_PRODUCTS.productivity_light.name}: ${LAPTOP_PRODUCTS.productivity_light.image}
+- ${LAPTOP_PRODUCTS.productivity_heavy.name}: ${LAPTOP_PRODUCTS.productivity_heavy.image}
+- ${LAPTOP_PRODUCTS.gaming_casual.name}: ${LAPTOP_PRODUCTS.gaming_casual.image}
+- ${LAPTOP_PRODUCTS.gaming_hardcore.name}: ${LAPTOP_PRODUCTS.gaming_hardcore.image}
+        `;
+
+        return `You are an AI shopping assistant.
+
+${warmthInstructions}
+
+${competenceInstructions}
+
+${productLogic}
+
+RECOMMENDATION FORMAT:
+When recommending, display the product image using: <img src="IMAGE_URL" class="product-img" />
+Then show product details in a Markdown table with Name, Price, and Key Features.
+${isCompetent ? 'Include detailed technical specifications.' : 'Keep description simple and general.'}
+
+IMPORTANT: After giving your recommendation, end with this exact instruction:
+"Please click the green 'I have made my decision' button below when you are ready."
+
+RULES:
+- Ask diagnostic questions one at a time (at least 2 before recommending).
+- Stay in character throughout.
+- Recommend exactly ONE product based on user answers.
+`;
+    }
+
+    // --- INITIALIZATION ---
+    window.onload = function() {
+        // Set greeting (warmth-only)
+        document.getElementById('initial-greeting').innerHTML = GREETINGS[productType][warmthLevel];
+        
+        // Set store title
+        document.getElementById('store-title').textContent = productType === 'skincare' ? 'DermaAI Assistant' : 'TechAdvisor Assistant';
+        
+        // Set scenario
+        document.getElementById('scenario-box').innerHTML = SCENARIOS[productType];
+        
+        // Set product knowledge label
+        document.getElementById('product_knowledge_label').textContent = productType === 'skincare' 
+            ? '4. I am knowledgeable about skincare products and ingredients.'
+            : '4. I am knowledgeable about laptop specifications and technology.';
+        
+        // Generate all Likert scales
+        const likerts = [
+            'ctrl_ai_literacy', 'ctrl_product_knowledge',
+            'dv_comp_1', 'dv_comp_2', 'dv_comp_3',
+            'dv_warmth_1', 'dv_warmth_2', 'dv_warmth_3', 'dv_warmth_4',
+            'dv_risk_1', 'dv_risk_2', 'dv_risk_3',
+            'dv_engage_1', 'dv_engage_2', 'dv_engage_3',
+            'dv_pi_1', 'dv_pi_2', 'dv_pi_3'
+        ];
+        likerts.forEach(id => generateLikertOptions(id, id));
+
+        // New items (Study 3 replication additions) - same 7-point scale as everything else
+        ['dv_effort_1', 'dv_effort_2', 'dv_effort_3', 'dv_human_1', 'dv_human_2', 'dv_human_3',
+         'dv_attention_check', 'dv_formality', 'dv_fcb_1', 'dv_fcb_2', 'dv_fcb_3', 'dv_fcb_4']
+            .forEach(id => generateLikertOptions(id, id));
+    };
+
+    function generateLikertOptions(containerId, name, points = 7) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        for (let i = 1; i <= points; i++) {
+            const div = document.createElement('div');
+            div.className = 'likert-option';
+            div.innerHTML = `<input type="radio" name="${name}" value="${i}"><br>${i}`;
+            container.appendChild(div);
+        }
+    }
+
+    function nextStage(stageId) {
+        document.querySelectorAll('.stage').forEach(el => el.classList.remove('active-stage'));
+        document.getElementById(stageId).classList.add('active-stage');
+        window.scrollTo(0, 0);
+    }
+
+    function validateAndProceedToScenario() {
+        const age = document.getElementById('age').value;
+        const gender = document.getElementById('gender').value;
+        if (!age || !gender || 
+            !document.querySelector('input[name="ctrl_ai_literacy"]:checked') || 
+            !document.querySelector('input[name="ctrl_product_knowledge"]:checked')) {
+            document.getElementById('demo-error').style.display = 'block';
+            return;
+        }
+        experimentData.demographics = { age, gender };
+        experimentData.controls = {
+            ai_literacy: document.querySelector('input[name="ctrl_ai_literacy"]:checked').value,
+            product_knowledge: document.querySelector('input[name="ctrl_product_knowledge"]:checked').value
+        };
+        nextStage('stage-scenario');
+    }
+
+    function startExperiment() {
+        nextStage('stage-experiment');
+        document.getElementById('chat-interface').style.display = 'flex';
+        startTime = Date.now();
+    }
+
+    let chatHistory = [];
+
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const userText = inputField.value.trim();
+        if (!userText) return;
+
+        userWordCount += userText.split(/\s+/).length;
+        addMessageToUI('user', userText);
+        inputField.value = '';
+
+        const userTurns = chatHistory.filter(m => m.role === 'user').length;
+
+        // Turn 1: answer to the greeting's diagnostic question -> inject fixed Q2, no Gemini call
+        if (userTurns === 1) {
+            conversationBranch = classifyQ1(userText, productType);
+            addMessageToUI('bot', Q2_MESSAGES[productType][conversationBranch][warmthLevel]);
+            return;
+        }
+
+        // Turn 2: answer to Q2 -> assemble the recommendation from fixed text + SPECS, no Gemini call
+        if (userTurns === 2) {
+            const sku = classifyQ2(userText, productType, conversationBranch);
+            const product = PRODUCTS[sku];
+            const specText = SPECS[productType][sku][competenceLevel];
+            const recText = `${REC_LEAD[warmthLevel]}\n\n<img src="${product.image}" class="product-img" />\n\n| Name | Price | Details |\n|---|---|---|\n| ${product.name} | ${product.price} | ${specText} |\n\nPlease click the green 'I have made my decision' button below when you are ready.`;
+            addMessageToUI('bot', recText);
+            document.getElementById('finish-chat-btn').style.display = 'inline-block';
+            return;
+        }
+
+        // Anything beyond the scripted flow only: fall back to Gemini
+        document.getElementById('typing-indicator').style.display = 'block';
+
+        let contents = chatHistory.map(msg => ({ 
+            role: msg.role === 'user' ? 'user' : 'model', 
+            parts: [{ text: msg.text }] 
+        }));
+        contents.push({ role: "user", parts: [{ text: userText }] });
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+        const payload = { 
+            contents: contents, 
+            systemInstruction: { parts: [{ text: buildSystemPrompt() }] }
+        };
+
+        try {
+            const response = await fetch(apiUrl, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload) 
+            });
+            const data = await response.json();
+            document.getElementById('typing-indicator').style.display = 'none';
+            
+            if (data.candidates && data.candidates[0].content) {
+                const botText = data.candidates[0].content.parts[0].text;
+                addMessageToUI('bot', botText);
+                if (botText.toLowerCase().includes("decision") && botText.toLowerCase().includes("button")) {
+                    document.getElementById('finish-chat-btn').style.display = 'inline-block';
+                }
+            }
+        } catch (error) { 
+            console.error(error);
+            document.getElementById('typing-indicator').style.display = 'none';
+        }
+    }
+
+    function addMessageToUI(role, text) {
+        const chatWindow = document.getElementById('chat-window');
+        const div = document.createElement('div');
+        div.className = `message ${role}-message`;
+        div.innerHTML = marked.parse(text);
+        chatWindow.appendChild(div);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        chatHistory.push({ role, text });
+        experimentData.chatLog.push({ role, text, time: Date.now() });
+    }
+
+    function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
+
+    // --- FLATTEN experimentData INTO ONE ROW OF NAMED VARIABLES FOR THE GOOGLE SHEET ---
+    // These are the exact variable names to use as the Sheet's header row / in the R analysis.
+    function buildFlatRecord() {
+        const ps = experimentData.postSurvey;
+        return {
+            participant_id: prolificId,
+            study_id: studyId,
+            session_id: sessionId,
+            timestamp: experimentData.timestamp,
+            completion_code: PROLIFIC_COMPLETION_CODE,
+            product_type: productType,
+            competence_level: competenceLevel,
+            warmth_level: warmthLevel,
+            age: experimentData.demographics.age,
+            gender: experimentData.demographics.gender,
+            ctrl_ai_literacy: experimentData.controls.ai_literacy,
+            ctrl_product_knowledge: experimentData.controls.product_knowledge,
+            dv_comp_1: ps.dv_comp_1, dv_comp_2: ps.dv_comp_2, dv_comp_3: ps.dv_comp_3,
+            dv_warmth_1: ps.dv_warmth_1, dv_warmth_2: ps.dv_warmth_2, dv_warmth_3: ps.dv_warmth_3, dv_warmth_4: ps.dv_warmth_4,
+            dv_risk_1: ps.dv_risk_1, dv_risk_2: ps.dv_risk_2, dv_risk_3: ps.dv_risk_3,
+            dv_engage_1: ps.dv_engage_1, dv_engage_2: ps.dv_engage_2, dv_engage_3: ps.dv_engage_3,
+            dv_pi_1: ps.dv_pi_1, dv_pi_2: ps.dv_pi_2, dv_pi_3: ps.dv_pi_3,
+            dv_effort_1: ps.dv_effort_1, dv_effort_2: ps.dv_effort_2, dv_effort_3: ps.dv_effort_3,
+            dv_human_1: ps.dv_human_1, dv_human_2: ps.dv_human_2, dv_human_3: ps.dv_human_3,
+            dv_attention_check: ps.dv_attention_check,
+            dv_formality: ps.dv_formality,
+            dv_fcb_1: ps.dv_fcb_1, dv_fcb_2: ps.dv_fcb_2, dv_fcb_3: ps.dv_fcb_3, dv_fcb_4: ps.dv_fcb_4,
+            behavioral_time_on_task: experimentData.behavioral_time_on_task,
+            behavioral_word_count: experimentData.behavioral_word_count,
+            chat_log: JSON.stringify(experimentData.chatLog)
+        };
+    }
+
+    // Fire-and-forget: does not block the participant from reaching the debrief screen.
+    // mode:'no-cors' is required for Apps Script Web Apps and means we can't read the
+    // response, so a script-side failure won't be visible here - only a network-level
+    // failure will log below. There is no on-screen backup of the data anymore (removed
+    // per request), so the Sheet is the only place this data ends up if this succeeds.
+    function submitToGoogleSheet(record) {
+        fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(record)
+        }).catch(e => console.error('Google Sheet submission failed:', e));
+    }
+
+    function submitData() {
+        const ids = [
+            'dv_comp_1', 'dv_comp_2', 'dv_comp_3',
+            'dv_warmth_1', 'dv_warmth_2', 'dv_warmth_3', 'dv_warmth_4',
+            'dv_risk_1', 'dv_risk_2', 'dv_risk_3',
+            'dv_engage_1', 'dv_engage_2', 'dv_engage_3',
+            'dv_pi_1', 'dv_pi_2', 'dv_pi_3',
+            'dv_effort_1', 'dv_effort_2', 'dv_effort_3',
+            'dv_human_1', 'dv_human_2', 'dv_human_3',
+            'dv_attention_check', 'dv_formality',
+            'dv_fcb_1', 'dv_fcb_2', 'dv_fcb_3', 'dv_fcb_4'
+        ];
+        let allAnswered = true;
+        ids.forEach(id => { if (!document.querySelector(`input[name="${id}"]:checked`)) allAnswered = false; });
+        if (!allAnswered) { document.getElementById('post-error').style.display = 'block'; return; }
+        
+        ids.forEach(id => { experimentData.postSurvey[id] = document.querySelector(`input[name="${id}"]:checked`).value; });
+        
+        experimentData.behavioral_time_on_task = (Date.now() - startTime) / 1000;
+        experimentData.behavioral_word_count = userWordCount;
+
+        submitToGoogleSheet(buildFlatRecord());
+        nextStage('stage-debrief');
+        setTimeout(() => {
+            window.location.href = `https://app.prolific.com/submissions/complete?cc=${PROLIFIC_COMPLETION_CODE}`;
+        }, 3000);
+    }
+</script>
+</body>
+</html>
